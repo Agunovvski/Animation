@@ -1,3 +1,5 @@
+CSSPlugin.useSVGTransformAttr = false;
+
 // buttons
 
 var rotateBtn = $('#rotate');
@@ -6,6 +8,10 @@ var rotateBtn = $('#rotate');
 var layer = $('#Layer_1');
 var head = $('#HEAD');
 var behind = $('#Behind');
+var jokerTop = $('#Joker_1');
+var jokerBottom = $('#Joker_2');
+var mouth = $('#Mouth');
+var eyes = $('#Eyes');
 
 
 // main timeline Rotate
@@ -19,24 +25,37 @@ tlIdle.to(head, 1, {
 .to(behind, 1, {
   y: 20
 }, "-=.5")
+.fromTo(jokerTop, 1,
+  {transformOrigin: 'center bottom'},
+  {rotationY: -180}, "-=.5")
+.fromTo(jokerBottom, 1,
+  {transformOrigin: 'center top'},
+  {rotationY: -180}, "-=.5")
 ;
 
 
 // timelines
 function getTimeLine(){
 
-  var tlLayer = new TimelineMax({ repeat: 1, paused: false, yoyo: true });
+  var tlLayer = new TimelineMax({ repeat: 0, paused: false, yoyo: false });
 
 
   tlLayer.to(layer, 2, {
       rotation: -360,
+      y: -200,
+      scale: .5,
+      repeat: 1,
+      yoyo: true,
       transformOrigin: 'center',
       ease: Back.easeIn.config(1.7)
-    })
-    .to(head, 2, {
-        rotation: 180,
-        transformOrigin: 'center'
-      },"-=1");
+    }, "+=.5")
+    .to(mouth, 1, {
+        // rotation: 180,
+        // attr:{}
+        yoyo: true,
+        repeat: 1,
+        ease: Elastic.easeOut.config(1, 0.3), y: -180
+      });
 
     return tlLayer;
 }
