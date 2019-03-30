@@ -15,10 +15,10 @@
     }
     body {
       font-size: 1.5em;
-      padding:0;
+      padding:5rem 0 5rem 0;
       margin:0;
       overflow:hidden;
-      background-color: #000;
+      background-color: #fff;
       display:flex;
       justify-content:center;
       flex-direction:column;
@@ -40,7 +40,7 @@
     body > div,
 svg {
        width:100vw;
-       height:100vh;
+       height:50vh;
     }
 
     li {
@@ -60,9 +60,7 @@ svg {
       color: var(--primary)
     }
 
-    svg {
+    /* svg {
       //transform: scale(1.25) translateY(1em);
 
-    }
-
-    /* Test */
+    } */
