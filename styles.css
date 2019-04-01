@@ -66,3 +66,7 @@ svg {
       //transform: scale(1.25) translateY(1em);
 
     } */
+
+    #HEAD_2{
+      opacity: 0;
+    }

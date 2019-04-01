@@ -6,11 +6,16 @@ var rotateBtn = $('#rotate');
 var disappearBtn = $('#disappear');
 var flipBtn = $('#flip')
 
+// sounds
+
+var flipSound = new Audio('./assets/card-flip.mp3');
+
 // //  elements
 var layer = $('#Layer_1');
 var wholeCard = $('#Whole_Card');
 var card = $('#Card');
 var head = $('#HEAD');
+var headTwo = $('#HEAD_2');
 var behind = $('#Behind');
 var jokerTop = $('#Joker_1');
 var jokerBottom = $('#Joker_2');
@@ -48,14 +53,13 @@ function getTimeLineRotate(){
 
 
   tlLayerRotate
-  // .set(shadow, {transformOrigin:"center bottom"})
   .to(wholeCard, 2, {
       rotation: -360,
       y: -200,
       scale: .25,
       repeat: 1,
       yoyo: true,
-      transformOrigin: 'center',
+      transformOrigin: 'left center',
       ease: Back.easeIn.config(1.7)
     })
     .to(head, 1, {
@@ -107,16 +111,29 @@ function getTimeLineDisappear(){
     // .fromTo(wholeCard, 2, {rotationY: 0}, {rotationY: 360}, "+=1")
     // .to(wholeCard, 2, {rotationY: 0})
     .set([wholeCard, card], {transformOrigin: "center"})
-    .to(card, 2, {scale: 6, ease: Power1.easeInOut, rotation: 180}, "+=.5")
+    .to(card, 2, {scale: 10, ease: Power1.easeOut, rotation: 180})
     .to(head, 2, {
         rotation: 360,
         transformOrigin: 'center',
+        y: 400,
+        scale: .8,
         yoyo: true,
         repeat: 1,
         ease: Back.easeInOut.config(1.7)
-      }, "-=3")
-      .to(card, 2, {scale: 1, ease: Power1.easeInOut, rotation: 0}, "-=1.5")
+      }, "-=1.5")
+      .to(headTwo, 2, {
+        rotation: -180,
+        transformOrigin: 'center',
+        opacity: 100,
+        scale: .8,
+        y: -400,
+        yoyo: true,
+        repeat: 1,
+        ease: Back.easeInOut.config(1.7)
+      }, "-=4")
+      .to(card, 2, {scale: 1,y: 0, ease: Power1.easeInOut, rotation: 0}, "-=1.5")
     ;
+
 
     return tlLayerDisappear;
 }
@@ -153,6 +170,8 @@ function getTimeLineFlip(){
       opacity:100
     }, "-=1.75")
     ;
+
+      flipSound.play();
 
     return tlLayerFlip;
 }
