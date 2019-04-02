@@ -2,7 +2,7 @@
       --primary: #fff;
       --secondary: #333;
       --bg: #ccc;
-      --highlight:#7F7FD3;
+      --highlight:#000;
     }
     * {
       box-sizing:border-box;
@@ -67,8 +67,8 @@ svg#Layer_1 {
 
     } */
 
-    svg#Icon_1{
-      transform: scale(1);
+    svg#Icon_1, svg#Icon_2, svg#Icon_3{
+      height:  8vh;
     }
 
     #HEAD_2{
