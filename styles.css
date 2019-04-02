@@ -38,7 +38,7 @@
       background-color: var(--highlight);
     }
     body > div,
-svg {
+svg#Layer_1 {
        width:100vw;
        height:50vh;
        /* padding: 100px 0; */
@@ -66,6 +66,10 @@ svg {
       //transform: scale(1.25) translateY(1em);
 
     } */
+
+    svg#Icon_1{
+      transform: scale(1);
+    }
 
     #HEAD_2{
       opacity: 0;

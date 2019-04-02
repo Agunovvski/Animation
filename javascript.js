@@ -24,6 +24,16 @@ var mouth = $('#Mouth');
 var eyes = $('#Eyes');
 
 
+// Icons elements
+
+var iconOne = $('#Icon_1');
+var iconOneRadius = $('#Icon_Radius');
+var iconOneCard = $('#Icon_Card');
+var iconOneHead = $('#Icon_Head')
+
+
+
+
 
 
 // Idle State
@@ -45,6 +55,11 @@ tlIdle.to(head, 1, {
 ;
 
 
+// Icon_Radius
+
+
+
+
 // timelines functions
 
 function getTimeLineRotate(){
@@ -63,11 +78,23 @@ function getTimeLineRotate(){
         scale: .4,
         ease: Back.easeInOut.config(1.7)
       }, "-=2")
-    .to([wholeCard, head], 2, {
+    .to(eyes, 1, {
+      ease: Circ.easeInOut,
+      y: 30,
+      repeat: 1,
+      yoyo: true
+    })
+    .to(behind, 1, {
+      y: -40,
+      ease: Bounce.easeOut,
+      repeat: 1,
+      yoyo: true
+    }, "-=1")
+    .to([wholeCard, head, eyes, behind], 2, {
       scale: 1,
       rotation: 0
     }, "+=3")
-      ;
+    ;
 
     return tlLayerRotate;
 }
@@ -160,10 +187,29 @@ function getTimeLineDisappear(){
 }
 
 
+// icons events
+function playIconOne(){
+
+  var tlIconOne = new TimelineMax({ repeat: 0, paused: false, yoyo: false });
+
+  tlIconOne
+  .to(iconOneCard, 1, {
+    rotation: 360,
+    scale: 1.5,
+    transformOrigin: 'center',
+    ease: Power1.easeOut,
+    repeat: 1,
+    yoyo: true
+  });
+  return tlIconOne;
+}
+
+
 
 // Eventlisteneres
 
-rotateBtn.addEventListener('click', getTimeLineRotate);
+iconOne.addEventListener('click', getTimeLineRotate);
+iconOne.addEventListener('click', playIconOne);
 disappearBtn.addEventListener('click', getTimeLineDisappear);
 flipBtn.addEventListener('click', getTimeLineFlip);
 
