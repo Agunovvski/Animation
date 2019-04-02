@@ -1,10 +1,11 @@
 CSSPlugin.useSVGTransformAttr = false;
+CSSPlugin.defaultTransformPerspective = 300;
 
 // buttons
 
 var rotateBtn = $('#rotate');
 var disappearBtn = $('#disappear');
-var flipBtn = $('#flip')
+var flipBtn = $('#flip');
 
 // sounds
 
@@ -21,7 +22,6 @@ var jokerTop = $('#Joker_1');
 var jokerBottom = $('#Joker_2');
 var mouth = $('#Mouth');
 var eyes = $('#Eyes');
-// var shadow = $('#Shadow');
 
 
 
@@ -35,13 +35,13 @@ tlIdle.to(head, 1, {
 })
 .to(behind, 1, {
   y: 20
-}, "-=.5")
+}, "-=.75")
 .fromTo(jokerTop, 1,
   {transformOrigin: 'center bottom'},
-  {rotationY: -180}, "-=.5")
+  {rotationY: -180}, "-=1.75")
 .fromTo(jokerBottom, 1,
   {transformOrigin: 'center top'},
-  {rotationY: -180}, "-=1")
+  {rotationY: -180}, "-=2")
 ;
 
 
@@ -53,25 +53,75 @@ function getTimeLineRotate(){
 
 
   tlLayerRotate
+  .set([wholeCard, head], {transformOrigin: 'center'})
   .to(wholeCard, 2, {
       rotation: -360,
-      y: -200,
-      scale: .25,
-      repeat: 1,
-      yoyo: true,
-      transformOrigin: 'left center',
+      scale: 8,
       ease: Back.easeIn.config(1.7)
     })
     .to(head, 1, {
-        rotation: 360,
-        transformOrigin: 'center',
-        yoyo: true,
-        repeat: 1,
+        scale: .4,
         ease: Back.easeInOut.config(1.7)
-      }, "-=3")
+      }, "-=2")
+    .to([wholeCard, head], 2, {
+      scale: 1,
+      rotation: 0
+    }, "+=3")
       ;
 
     return tlLayerRotate;
+}
+
+
+
+function getTimeLineFlip(){
+
+  var tlLayerFlip = new TimelineMax({ repeat: 0, paused: false, yoyo: false });
+
+
+  tlLayerFlip
+    .set([wholeCard, head], {transformOrigin: 'center'})
+    .to(head, .5,{
+      opacity: 0,
+      x: 600,
+      ease: Power2.easeOut,
+    })
+    .to([ jokerTop, jokerBottom ], .5,{
+      opacity: 0,
+      x: 600,
+      ease: Power2.easeOut,
+    }, "-=.2")
+    .to(wholeCard, 2, {
+      ease: Expo.easeInOut,
+      rotationX: 30,
+      rotation: -30,
+      skewX: 20,
+      rotationY: 180,
+      scale: 1.5
+    })
+    .to(head, 1,{
+      opacity: 100,
+      x: 0,
+      ease: Power2.easeIn,
+    })
+    .to([ jokerTop, jokerBottom ], 1,{
+      opacity: 100,
+      x: 0,
+      ease: Power2.easeIn,
+    }, "-=.75")
+    .to(wholeCard, 3, {
+      ease: Expo.easeInOut,
+      rotationX: 0,
+      rotationY: 0,
+      rotation: 0,
+      skewX: 0,
+      scale: 1
+    }, "+=2")
+    ;
+
+      flipSound.play();
+
+    return tlLayerFlip;
 }
 
 function getTimeLineDisappear(){
@@ -80,38 +130,9 @@ function getTimeLineDisappear(){
 
 
   tlLayerDisappear
-    // .to(wholeCard, 2, {
-    //   ease: Back.easeIn.config(1.7),
-    //   transformOrigin: 'center',
-    //   rotationY: 180,
-    //   repeat: 1,
-    //   yoyo: true,
-    //   // skewX: 5,
-    //   perspective: 200
-    // })
-    // .to(head, 1,{
-    //   opacity: 0,
-    //   ease: Power1.easeOut,
-    // }, "-=2")
-    // .to(head, 1,{
-    //   yPercent: 100,
-    //   ease: Power1.easeOut
-    // })
-    // .to(head, 1 ,{
-    //   yPercent: 0,
-    //   opacity: 100,
-    //   ease: Power2.easeInOut
-    // })
-    // .fromTo([head, jokerTop, jokerBottom], .3 ,{x:0}, {x: 800})
-    // .to([head, jokerTop, jokerBottom], 1, {x:0},"+=2")
-    // .to(wholeCard, 1, {skewX: 0, rotation: 0, scale: 1, xPercent:0})
 
-
-    // .set(wholeCard, {transformPerspective: 300, transformOrigin: "left 50% -100px"})
-    // .fromTo(wholeCard, 2, {rotationY: 0}, {rotationY: 360}, "+=1")
-    // .to(wholeCard, 2, {rotationY: 0})
     .set([wholeCard, card], {transformOrigin: "center"})
-    .to(card, 2, {scale: 10, ease: Power1.easeOut, rotation: 180})
+    .to(card, 2, {scale: 10, ease: Sine.easeInOut, rotation: 180})
     .to(head, 2, {
         rotation: 360,
         transformOrigin: 'center',
@@ -120,7 +141,7 @@ function getTimeLineDisappear(){
         yoyo: true,
         repeat: 1,
         ease: Back.easeInOut.config(1.7)
-      }, "-=1.5")
+      }, "-=1")
       .to(headTwo, 2, {
         rotation: -180,
         transformOrigin: 'center',
@@ -136,44 +157,6 @@ function getTimeLineDisappear(){
 
 
     return tlLayerDisappear;
-}
-
-
-function getTimeLineFlip(){
-
-  var tlLayerFlip = new TimelineMax({ repeat: 0, paused: false, yoyo: false });
-
-
-  tlLayerFlip
-    .to(wholeCard, 2, {
-      ease: Expo.easeInOut,
-      transformOrigin: 'center',
-      rotationX: 30,
-      rotation: -30,
-      skewX: 20,
-      rotationY: 180
-    })
-    // .to(wholeCard, 1, {rotationY: 180})
-    .to(head, 1,{
-      opacity: 0,
-      ease: Power4.easeOut,
-    }, "-=1.2")
-    .to(wholeCard, 3, {
-      ease: Expo.easeInOut,
-      rotationX: 0,
-      rotationY: 0,
-      rotation: 0,
-      skewX: 0
-    })
-    .to(head, 1, {
-      ease: Power4.easeIn,
-      opacity:100
-    }, "-=1.75")
-    ;
-
-      flipSound.play();
-
-    return tlLayerFlip;
 }
 
 
